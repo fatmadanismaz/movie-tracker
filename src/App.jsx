@@ -15,12 +15,11 @@ function App() {
   }, [movies]);
 
   return (
-    <div className="container mt-5">
-      <div className="text-center mb-5">
-        <h1 className="display-3 fw-bold" style={{ color: "#5C4033" }}>
-          Film Takip Uygulaması
-        </h1>
-        <p className="fs-5" style={{ color: "#6F4E37" }}>
+    <div>
+      {/* Hero Alanı */}
+      <div className="hero mb-5">
+        <h1 className="hero-title">🍿 Film Takip Uygulaması</h1>
+        <p className="hero-subtitle">
           Favori filmlerini kolayca ekle, düzenle ve takip et.
         </p>
       </div>
@@ -33,12 +32,12 @@ function App() {
         setEditingMovie={setEditingMovie}
       />
 
-      {/* Filmleri listelemek için buraya MovieList'i de eklemek isteyebilirsin */}
+      {/* Filmleri listelemek için MovieList */}
       <MovieList
-  movies={movies}
-  setMovies={setMovies}
-  onEdit={setEditingMovie}
-/>
+        movies={movies}
+        setMovies={setMovies}
+        onEdit={setEditingMovie}
+      />
     </div>
   );
 }
