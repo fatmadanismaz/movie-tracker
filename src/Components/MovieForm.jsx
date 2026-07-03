@@ -57,38 +57,61 @@ function MovieForm({ movies, setMovies, editingMovie, setEditingMovie }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+   <form onSubmit={handleSubmit} className="card shadow p-4 mb-4 border-0">
+
+  <h3 className="text-center mb-4">🎬 Film Bilgileri</h3>
+
+  <div className="row">
+
+    <div className="col-md-6 mb-3">
       <input
+        className="form-control"
+        type="text"
+        placeholder="🎬 Film Adı"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Film adı"
       />
+    </div>
 
+    <div className="col-md-6 mb-3">
       <input
+        className="form-control"
+        type="number"
+        placeholder="📅 Yıl"
         value={year}
         onChange={(e) => setYear(e.target.value)}
-        placeholder="Yıl"
       />
+    </div>
 
+    <div className="col-md-6 mb-3">
       <input
+        className="form-control"
+        type="text"
+        placeholder="🎭 Tür"
         value={genre}
         onChange={(e) => setGenre(e.target.value)}
-        placeholder="Tür"
       />
+    </div>
 
+    <div className="col-md-6 mb-3">
       <input
+        className="form-control"
         type="number"
+        placeholder="⭐ Puan (0-10)"
         value={rating}
         onChange={(e) => setRating(e.target.value)}
-        placeholder="Puan"
         min="0"
         max="10"
       />
+    </div>
 
-      <button type="submit">
-        {editingMovie ? "Güncelle" : "Ekle"}
-      </button>
-    </form>
+  </div>
+
+  <button className="btn btn-primary w-100 mt-2" type="submit">
+    {editingMovie ? "✏️ Güncelle" : "➕ Film Ekle"}
+  </button>
+
+</form>
   );
 }
 
