@@ -1,55 +1,54 @@
 import { useState, useEffect } from "react";
 
-function MovieForm({ movies, setMovies, editingMovie, setEditingMovie }) {
+function MovieForm({
+  movies,
+  setMovies,
+  editingMovie,
+  setEditingMovie,
+}) {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
-  const [rating, setRating] = useState("");
   const [genre, setGenre] = useState("");
+  const [rating, setRating] = useState("");
 
   useEffect(() => {
     if (editingMovie) {
       setTitle(editingMovie.title);
       setYear(editingMovie.year);
-      setRating(editingMovie.rating);
       setGenre(editingMovie.genre);
-    } 
+      setRating(editingMovie.rating);
+    }
   }, [editingMovie]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (!title || !year || !genre || !rating) {
-      alert("Lütfen tüm alanları doldurun!");
-      return;
-    }
 
-    if (rating < 0 || rating > 10) {
-      alert("Puan 0 ile 10 arasında olmalıdır.");
+    if (!title || !year || !genre || !rating) {
+      alert("Lütfen tüm alanları doldurun.");
       return;
     }
 
     if (editingMovie) {
-      // Güncelleme İşlemi
-      const updated = movies.map((movie) =>
+      const updatedMovies = movies.map((movie) =>
         movie.id === editingMovie.id
-          ? { ...movie, title, year, rating, genre }
+          ? { ...movie, title, year, genre, rating }
           : movie
       );
-      setMovies(updated);
+
+      setMovies(updatedMovies);
       setEditingMovie(null);
     } else {
-      // Yeni Ekleme İşlemi
       const newMovie = {
         id: Date.now(),
         title,
         year,
+        genre,
         rating,
-        genre
       };
+
       setMovies([...movies, newMovie]);
     }
 
-    // Formu temizle
     setTitle("");
     setYear("");
     setGenre("");
@@ -57,61 +56,77 @@ function MovieForm({ movies, setMovies, editingMovie, setEditingMovie }) {
   };
 
   return (
-   <form onSubmit={handleSubmit} className="card shadow p-4 mb-4 border-0">
+    <section className="movie-form-card">
 
-  <h3 className="text-center mb-4">🎬 Film Bilgileri</h3>
+      <h2>➕ Yeni Film</h2>
+      <p className="form-text">
+        Koleksiyonuna yeni bir film ekle.
+      </p>
 
-  <div className="row">
+      <form onSubmit={handleSubmit}>
 
-    <div className="col-md-6 mb-3">
-      <input
-        className="form-control"
-        type="text"
-        placeholder="🎬 Film Adı"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-    </div>
+        <div className="form-grid">
 
-    <div className="col-md-6 mb-3">
-      <input
-        className="form-control"
-        type="number"
-        placeholder="📅 Yıl"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-      />
-    </div>
+          <div>
+            <label>Film Adı</label>
 
-    <div className="col-md-6 mb-3">
-      <input
-        className="form-control"
-        type="text"
-        placeholder="🎭 Tür"
-        value={genre}
-        onChange={(e) => setGenre(e.target.value)}
-      />
-    </div>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Örn: Interstellar"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
 
-    <div className="col-md-6 mb-3">
-      <input
-        className="form-control"
-        type="number"
-        placeholder="⭐ Puan (0-10)"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        min="0"
-        max="10"
-      />
-    </div>
+          <div>
+            <label>Çıkış Yılı</label>
 
-  </div>
+            <input
+              type="number"
+              className="form-control"
+              placeholder="2014"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </div>
 
-  <button className="btn btn-primary w-100 mt-2" type="submit">
-    {editingMovie ? "✏️ Güncelle" : "➕ Film Ekle"}
-  </button>
+          <div>
+            <label>Tür</label>
 
-</form>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Bilim Kurgu"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label>IMDb Puanı</label>
+
+            <input
+              type="number"
+              className="form-control"
+              placeholder="9.5"
+              min="0"
+              max="10"
+              step="0.1"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+            />
+          </div>
+
+        </div>
+
+        <button className="save-btn">
+          {editingMovie ? "💾 Güncelle" : "🎬 Filmi Kaydet"}
+        </button>
+
+      </form>
+
+    </section>
   );
 }
 

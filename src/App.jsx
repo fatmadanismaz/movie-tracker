@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import MovieForm from "./Components/MovieForm";
 import MovieList from "./Components/MovieList";
-import MovieForm from "./Components/MovieForm"; // Eksik olan import
 
 function App() {
   const [movies, setMovies] = useState(() => {
-    const savedMovies = localStorage.getItem("movies");
-    return savedMovies ? JSON.parse(savedMovies) : [];
+    const saved = localStorage.getItem("movies");
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [editingMovie, setEditingMovie] = useState(null);
@@ -15,29 +15,41 @@ function App() {
   }, [movies]);
 
   return (
-    <div>
-      {/* Hero Alanı */}
-      <div className="hero mb-5">
-        <h1 className="hero-title">🍿 Film Takip Uygulaması</h1>
-        <p className="hero-subtitle">
-          Favori filmlerini kolayca ekle, düzenle ve takip et.
-        </p>
-      </div>
+    <div className="app">
 
-      {/* Film Ekleme/Düzenleme Formu */}
-      <MovieForm
-        movies={movies}
-        setMovies={setMovies}
-        editingMovie={editingMovie}
-        setEditingMovie={setEditingMovie}
-      />
+      <header className="hero">
+        <div className="hero-overlay"></div>
 
-      {/* Filmleri listelemek için MovieList */}
-      <MovieList
-        movies={movies}
-        setMovies={setMovies}
-        onEdit={setEditingMovie}
-      />
+        <div className="container">
+
+          <h1 className="hero-title">
+            🎬 Film Takip Uygulaması
+          </h1>
+
+          <p className="hero-subtitle">
+            Favori filmlerini yönet, düzenle ve takip et.
+          </p>
+
+        </div>
+      </header>
+
+      <main className="container py-5">
+
+        <MovieForm
+          movies={movies}
+          setMovies={setMovies}
+          editingMovie={editingMovie}
+          setEditingMovie={setEditingMovie}
+        />
+
+        <MovieList
+          movies={movies}
+          setMovies={setMovies}
+          onEdit={setEditingMovie}
+        />
+
+      </main>
+
     </div>
   );
 }
