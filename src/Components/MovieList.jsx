@@ -5,63 +5,79 @@ function MovieList({ movies, setMovies, onEdit }) {
   };
 
   return (
-    <div className="mt-5">
-      <h3 className="text-center mb-4">🎬 Film Listesi</h3>
+    <section className="movie-section">
+
+      <div className="section-header">
+        <h2>🎞️ Film Koleksiyonum</h2>
+        <span>{movies.length} Film</span>
+      </div>
 
       {movies.length === 0 ? (
-        <div className="alert alert-info text-center">
-          Henüz film eklenmedi.
+        <div className="empty-state">
+          <div className="empty-icon">🎬</div>
+          <h3>Henüz film eklenmedi</h3>
+          <p>İlk filmini ekleyerek koleksiyonunu oluşturmaya başla.</p>
         </div>
       ) : (
-        movies.map((movie) => (
-          <div key={movie.id} className="card shadow mb-3 border-0">
-            <div className="card-body d-flex justify-content-between align-items-center">
+        <div className="movie-grid">
 
-              <div>
-                <h4 className="fw-bold text-primary mb-3">
-                  🎬 {movie.title}
-                </h4>
+          {movies.map((movie) => (
+            <div className="movie-card" key={movie.id}>
 
-                <p className="mb-2">
-                  <strong>📅 Yıl:</strong> {movie.year}
-                </p>
 
-                <p className="mb-2">
-                  <strong>🎭 Tür:</strong>
-                  <span className="badge bg-secondary ms-2">
-                    {movie.genre}
+              <div className="movie-content full-width">
+
+                <div className="movie-top">
+
+                  <h3>{movie.title}</h3>
+
+                  <span className="rating">
+                    ⭐ {movie.rating}
                   </span>
-                </p>
 
-                <p className="mb-0">
-                  <strong>⭐ Puan:</strong>
-                  <span className="badge bg-warning text-dark ms-2">
-                    {movie.rating}/10
-                  </span>
-                </p>
-              </div>
+                </div>
 
-              <div>
-                <button
-                  className="btn btn-warning me-2"
-                  onClick={() => onEdit(movie)}
-                >
-                  ✏️ Düzenle
-                </button>
+                <div className="movie-info">
 
-                <button
-                  className="btn btn-danger"
-                  onClick={() => deleteMovie(movie.id)}
-                >
-                  🗑️ Sil
-                </button>
+                  <p>
+                    <strong>Tür</strong>
+                    <span>{movie.genre}</span>
+                  </p>
+
+                  <p>
+                    <strong>Yıl</strong>
+                    <span>{movie.year}</span>
+                  </p>
+
+                </div>
+
+                <div className="movie-buttons">
+
+                  <button
+                    className="edit-btn"
+                    onClick={() => onEdit(movie)}
+                  >
+                    ✏️ Düzenle
+                  </button>
+
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteMovie(movie.id)}
+                  >
+                    🗑️ Sil
+                  </button>
+
+                </div>
+
               </div>
 
             </div>
-          </div>
-        ))
+          ))}
+
+        </div>
       )}
-    </div>
+
+    </section>
   );
 }
 
